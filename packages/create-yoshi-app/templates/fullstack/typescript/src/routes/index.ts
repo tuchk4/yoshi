@@ -4,7 +4,7 @@ import { RouteContext } from 'yoshi-server/build/types';
 export default route(async function() {
   const renderModel = getRenderModel(this);
 
-  renderView(this.res, 'templates/app.ejs', renderModel);
+  renderView(this.res, 'index.ejs', renderModel);
 });
 
 function getRenderModel(context: RouteContext) {
@@ -15,6 +15,6 @@ function getRenderModel(context: RouteContext) {
     basename,
     debug: debug || process.env.NODE_ENV === 'development',
     title: 'Wix Full Stack Project Boilerplate',
-    staticsDomain: context.initData.config.clientTopology.staticsDomain,
+    staticsDomain: context.config.clientTopology.staticsDomain,
   };
 }
