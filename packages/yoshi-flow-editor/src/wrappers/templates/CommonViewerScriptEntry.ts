@@ -1,5 +1,6 @@
 import {
   WidgetType,
+  ExperimentsConfig,
   SentryConfig,
 } from 'yoshi-flow-editor-runtime/build/constants';
 import t from './template';
@@ -13,7 +14,8 @@ export type TemplateControllerConfig = {
 type Opts = {
   viewerScriptWrapperPath: string;
   viewerAppFileName: string;
-  sentry: SentryConfig | null;
+  sentryConfig: SentryConfig | null;
+  experimentsConfig: ExperimentsConfig | null;
   controllersMeta: Array<TemplateControllerConfig>;
 };
 
@@ -53,15 +55,22 @@ export default t<Opts>`
   import * as viewerApp from '${({ viewerAppFileName }) => viewerAppFileName}';
   var importedApp = viewerApp;
 
-  var sentry = ${({ sentry }) =>
-    sentry
+  var sentry = ${({ sentryConfig }) =>
+    sentryConfig
       ? `{
-      DSN: '${sentry.DSN}',
-      id: '${sentry.id}',
-      projectName: '${sentry.projectName}',
-      teamName: '${sentry.teamName}',
+      DSN: '${sentryConfig.DSN}',
+      id: '${sentryConfig.id}',
+      projectName: '${sentryConfig.projectName}',
+      teamName: '${sentryConfig.teamName}',
     }`
       : 'null'};
+
+  var experimentsConfig = ${({ experimentsConfig }) =>
+    experimentsConfig
+      ? `{
+    scope: ${experimentsConfig.scope}
+  }`
+      : 'null'}
 
   export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
   export const createControllers = createControllersWithDescriptors([${({
@@ -69,5 +78,5 @@ export default t<Opts>`
   }) =>
     controllerConfigs({
       controllersMeta,
-    })}], importedApp.mapPlatformStateToAppData);
+    })}], importedApp.mapPlatformStateToAppData, experimentsConfig);
 `;

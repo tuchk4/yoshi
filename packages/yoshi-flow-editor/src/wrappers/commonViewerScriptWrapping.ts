@@ -37,8 +37,9 @@ const viewerScriptWrapper = (
 
   const generateControllerEntryContent = viewerScriptEntry({
     viewerScriptWrapperPath,
-    sentry: model.sentry,
+    sentryConfig: model.sentry,
     controllersMeta,
+    experimentsConfig: model.experimentsConfig,
     viewerAppFileName: model.viewerAppFileName,
   });
 

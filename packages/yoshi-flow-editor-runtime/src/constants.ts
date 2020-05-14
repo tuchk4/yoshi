@@ -5,6 +5,10 @@ export const OOI_WIDGET_COMPONENT_TYPE = 'WIDGET_OUT_OF_IFRAME';
 export const PLATFORM_WIDGET_COMPONENT_TYPE = 'STUDIO_WIDGET';
 export const PAGE_COMPONENT_TYPE = 'PAGE_OUT_OF_IFRAME';
 
+export interface ExperimentsConfig {
+  scope: string;
+}
+
 export type WidgetType =
   | typeof OOI_WIDGET_COMPONENT_TYPE
   | typeof PLATFORM_WIDGET_COMPONENT_TYPE

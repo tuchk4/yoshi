@@ -6,5 +6,8 @@
     "id": "{%sentryData.id%}",
     "projectName": "{%sentryData.projectName%}",
     "teamName": "{%sentryData.teamName%}"
+  },
+  "experiments": {
+    "scope": "some-scope"
   }
 }

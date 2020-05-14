@@ -14,6 +14,9 @@ describe('CommonViewerScriptEntry template', () => {
           widgetType: OOI_WIDGET_COMPONENT_TYPE,
         },
       ],
+      experimentsConfig: {
+        scope: 'test-scope',
+      },
       viewerAppFileName: 'project/src/app.ts',
     });
 
@@ -37,6 +40,9 @@ describe('CommonViewerScriptEntry template', () => {
           widgetType: OOI_WIDGET_COMPONENT_TYPE,
         },
       ],
+      experimentsConfig: {
+        scope: 'test-scope',
+      },
       viewerAppFileName: 'project/src/app.ts',
     });
 
@@ -49,6 +55,9 @@ describe('CommonViewerScriptEntry template', () => {
         'yoshi-flow-editor-runtime/build/viewerScript.js',
       sentry: null,
       controllersMeta: [],
+      experimentsConfig: {
+        scope: 'test-scope',
+      },
       viewerAppFileName: 'project/src/app.ts',
     });
 

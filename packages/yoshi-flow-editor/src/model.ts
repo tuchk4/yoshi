@@ -8,6 +8,7 @@ import { Config } from 'yoshi-config/build/config';
 import {
   WidgetType,
   SentryConfig,
+  ExperimentsConfig,
   OOI_WIDGET_COMPONENT_TYPE,
   PLATFORM_WIDGET_COMPONENT_TYPE,
 } from 'yoshi-flow-editor-runtime/build/constants';
@@ -28,6 +29,7 @@ export interface FlowEditorModel {
   artifactId: string;
   viewerAppFileName: string;
   editorEntryFileName: string | null;
+  experimentsConfig: ExperimentsConfig | null;
   components: Array<ComponentModel>;
   sentry: SentryConfig | null;
 }
@@ -43,6 +45,7 @@ export interface ComponentModel {
 }
 
 export interface AppConfig {
+  experiments: ExperimentsConfig | null;
   appDefinitionId: string;
   sentry?: SentryConfig;
 }
@@ -216,6 +219,7 @@ For more info, visit http://tiny.cc/dev-center-registration`);
   const model = {
     appName: config.name,
     sentry: (shouldUseSentry() && appConfig.sentry) || null,
+    experimentsConfig: appConfig ? appConfig.experiments : null,
     appDefId: appConfig.appDefinitionId ?? null,
     editorEntryFileName,
     artifactId,

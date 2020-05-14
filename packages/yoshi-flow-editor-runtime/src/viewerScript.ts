@@ -156,6 +156,7 @@ const getDescriptorForConfig = (
 export const createControllers = (
   createController: Function,
   mapPlatformStateToAppData: Function,
+  experimentsScope?: string,
 ) => {
   return createControllersWithDescriptors(
     [
@@ -166,12 +167,14 @@ export const createControllers = (
       },
     ],
     mapPlatformStateToAppData,
+    experimentsScope,
   );
 };
 
 export const createControllersWithDescriptors = (
   controllerDescriptors: Array<ControllerDescriptor>,
   mapPlatformStateToAppData: Function,
+  experimentsScope?: string,
 ) => (controllerConfigs: Array<IWidgetControllerConfig>) => {
   // It should be called inside initAppForPage
   const { appParams, platformAPIs, wixCodeApi } = controllerConfigs[0];
@@ -199,7 +202,9 @@ export const createControllersWithDescriptors = (
       );
     }
 
-    initializeExperiments();
+    if (experimentsScope) {
+      initializeExperiments(experimentsScope);
+    }
 
     return wrapControllerByWidgetType(
       controllerDescriptor,
@@ -211,8 +216,8 @@ export const createControllersWithDescriptors = (
   return wrappedControllers;
 };
 
-const initializeExperiments = () => {
-  frameworkData = fetchFrameworkData();
+const initializeExperiments = (scope: string) => {
+  frameworkData = fetchFrameworkData(scope);
 
   // TODO: Generalize
   frameworkData.experimentsPromise = frameworkData.experimentsPromise.then(
