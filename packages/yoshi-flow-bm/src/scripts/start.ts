@@ -14,6 +14,7 @@ import {
 import createFlowBMModel, { watchFlowBMModel } from '../model';
 import renderModule, { moduleEntryPath } from '../renderModule';
 import renderModuleConfig from '../renderModuleConfig';
+import getStartUrl from '../start-url';
 
 const join = (...dirs: Array<string>) => path.join(process.cwd(), ...dirs);
 
@@ -53,7 +54,6 @@ const start: CliCommand = async function(argv, config) {
       Options
         --help, -h      Displays this message
         --server        (Deprecated!) The main file to start your server
-        --url           Opens the browser with the supplied URL
         --production    Start using unminified production build
         --https         Serve the app bundle on https
         --debug         Allow app-server debugging
@@ -100,11 +100,9 @@ const start: CliCommand = async function(argv, config) {
     isHot: true,
   });
 
-  const { pages } = createFlowBMModel();
+  const model = createFlowBMModel();
 
-  const startUrl = `http://localhost:5000/business-manager/${uuid()}/${
-    pages[0].route
-  }`;
+  const startUrl = getStartUrl(model);
 
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig],
