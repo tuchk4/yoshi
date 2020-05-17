@@ -12,8 +12,8 @@ exports[`CommonViewerScriptEntry template generates correct template w/o control
   var sentryConfig = null;
 
   var experimentsConfig = {
-    scope: test-scope
-  }
+    scope: 'test-scope'
+  };
 
   export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([], importedApp.mapPlatformStateToAppData);
@@ -33,8 +33,8 @@ import controller1 from 'project/src/components/todo/controller.ts';
   var sentryConfig = null;
 
   var experimentsConfig = {
-    scope: test-scope
-  }
+    scope: 'test-scope'
+  };
 
   export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
@@ -62,8 +62,8 @@ exports[`CommonViewerScriptEntry template generates correct template with sentry
     };
 
   var experimentsConfig = {
-    scope: test-scope
-  }
+    scope: 'test-scope'
+  };
 
   export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
@@ -84,8 +84,8 @@ exports[`CommonViewerScriptEntry template generates correct template with single
   var sentryConfig = null;
 
   var experimentsConfig = {
-    scope: test-scope
-  }
+    scope: 'test-scope'
+  };
 
   export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
