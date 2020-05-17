@@ -1,4 +1,5 @@
 import prompts from 'prompts';
+import { getProjectArtifactId } from 'yoshi-helpers/build/utils';
 import { readCache, writeCache } from './cache';
 import { FlowBMModel } from './model';
 
@@ -20,7 +21,21 @@ const getStartUrl = async ({ pages }: FlowBMModel) => {
 
   writeCache('metaSiteId', metaSiteId);
 
-  return `https://www.wix.com/dashboard/${metaSiteId}/${pages[0].route}`;
+  const bmUrl = `https://www.wix.com/dashboard/${metaSiteId}/${pages[0].route}`;
+
+  const artifactId = getProjectArtifactId()!;
+
+  return elgarOverride(bmUrl, {
+    [artifactId]: 'http://localhost:3200',
+  });
 };
+
+const elgarOverride = (
+  redirectToUrl: string,
+  staticsVersions: Record<string, string>,
+) =>
+  'https://apps.wix.com/elgar-server/redirect' +
+  `?redirectToUrl=${redirectToUrl}` +
+  `&staticsVersions=${JSON.stringify(staticsVersions)}`;
 
 export default getStartUrl;
