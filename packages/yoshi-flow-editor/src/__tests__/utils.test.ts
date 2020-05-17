@@ -93,6 +93,7 @@ describe('addOverrideQueryParamsWithModel', () => {
         experimentsConfig: {
           scope: 'test-scope',
         },
+        sentry: null,
         components: [
           {
             name: 'comp',

@@ -10,7 +10,7 @@ import {
   IWixSDKEditorEnvironmentContext,
 } from './react/SDK/SDKContext';
 import { WixSDKProvider } from './react/SDK/WixSDKProvider';
-import { SentryConfig } from './constants';
+import { SentryConfig, ExperimentsConfig } from './constants';
 
 declare global {
   interface Window {
@@ -25,6 +25,7 @@ interface IEditorAppCreatorProps {
   customInitAppForPage: Function;
   name: string;
   sentry: SentryConfig | null;
+  experimentsConfig: ExperimentsConfig | null;
 }
 interface IEditorAppWithWixSDKCreatorProps extends IEditorAppCreatorProps {
   sdk: IWixSDKContext;
@@ -42,6 +43,7 @@ const createEditorAppForWixSDK = ({
   customInitAppForPage,
   name,
   sentry,
+  experimentsConfig,
   sdk,
 }: IEditorAppWithWixSDKCreatorProps) => {
   const WithComponent = WidgetWrapper(UserComponent, {
@@ -51,13 +53,22 @@ const createEditorAppForWixSDK = ({
     isEditor: true,
   });
 
+  console.log(
+    experimentsConfig,
+    'experimentsConfigexperimentsConfigexperimentsConfig',
+  );
+
   return ViewerScriptWrapper(WithComponent, {
     viewerScript: {
       createControllers: createControllers(
         userController,
         mapPlatformStateToAppData,
       ),
-      initAppForPage: initAppForPageWrapper(customInitAppForPage, sentry),
+      initAppForPage: initAppForPageWrapper(
+        customInitAppForPage,
+        sentry,
+        experimentsConfig,
+      ),
     },
     Wix: sdk.Wix,
     widgetConfig: {

@@ -9,9 +9,13 @@ exports[`CommonViewerScriptEntry template generates correct template w/o control
   import * as viewerApp from 'project/src/app.ts';
   var importedApp = viewerApp;
 
-  var sentry = null;
+  var sentryConfig = null;
 
-  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
+  var experimentsConfig = {
+    scope: test-scope
+  }
+
+  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([], importedApp.mapPlatformStateToAppData);
 "
 `;
@@ -26,9 +30,13 @@ import controller1 from 'project/src/components/todo/controller.ts';
   import * as viewerApp from 'project/src/app.ts';
   var importedApp = viewerApp;
 
-  var sentry = null;
+  var sentryConfig = null;
 
-  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
+  var experimentsConfig = {
+    scope: test-scope
+  }
+
+  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
           widgetType: \\"WIDGET_OUT_OF_IFRAME\\",
           id: \\"123\\" }, { method: controller1,
@@ -46,14 +54,18 @@ exports[`CommonViewerScriptEntry template generates correct template with sentry
   import * as viewerApp from 'project/src/app.ts';
   var importedApp = viewerApp;
 
-  var sentry = {
+  var sentryConfig = {
       DSN: 'https:xxx@123',
       id: 'xxx',
       projectName: 'project-name',
       teamName: 'team-name',
     };
 
-  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
+  var experimentsConfig = {
+    scope: test-scope
+  }
+
+  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
           widgetType: \\"WIDGET_OUT_OF_IFRAME\\",
           id: \\"123\\" }], importedApp.mapPlatformStateToAppData);
@@ -69,9 +81,13 @@ exports[`CommonViewerScriptEntry template generates correct template with single
   import * as viewerApp from 'project/src/app.ts';
   var importedApp = viewerApp;
 
-  var sentry = null;
+  var sentryConfig = null;
 
-  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
+  var experimentsConfig = {
+    scope: test-scope
+  }
+
+  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([{ method: controller0,
           widgetType: \\"WIDGET_OUT_OF_IFRAME\\",
           id: \\"123\\" }], importedApp.mapPlatformStateToAppData);

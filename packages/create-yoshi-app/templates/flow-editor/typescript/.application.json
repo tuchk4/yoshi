@@ -8,6 +8,6 @@
     "teamName": "{%sentryData.teamName%}"
   },
   "experiments": {
-    "scope": "some-scope"
+    "scope": "test"
   }
 }

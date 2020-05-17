@@ -27,7 +27,8 @@ const componentWrapper = (
         componentFileName: component.widgetFileName,
         controllerFileName: component.viewerControllerFileName,
         viewerAppFileName: model.viewerAppFileName,
-        sentry: model.sentry,
+        sentryConfig: model.sentry,
+        experimentsConfig: model.experimentsConfig,
       });
 
       fs.outputFileSync(generatedWidgetEntryPath, generateWidgetEntryContent);

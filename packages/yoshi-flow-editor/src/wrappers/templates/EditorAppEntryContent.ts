@@ -1,4 +1,7 @@
-import { SentryConfig } from 'yoshi-flow-editor-runtime/build/constants';
+import {
+  SentryConfig,
+  ExperimentsConfig,
+} from 'yoshi-flow-editor-runtime/build/constants';
 import t from './template';
 
 type Opts = Record<
@@ -9,7 +12,8 @@ type Opts = Record<
   | 'componentName',
   string
 > & {
-  sentry: SentryConfig | null;
+  sentryConfig: SentryConfig | null;
+  experimentsConfig: ExperimentsConfig | null;
 };
 
 export default t<Opts>`
@@ -26,20 +30,28 @@ export default t<Opts>`
     var importedApp = viewerApp;
 
     var componentName = '${({ componentName }) => componentName}';
-    var sentry = ${({ sentry }) =>
-      sentry
+    var sentryConfig = ${({ sentryConfig }) =>
+      sentryConfig
         ? `{
-      DSN: '${sentry.DSN}',
-      id: '${sentry.id}',
-      projectName: '${sentry.projectName}',
-      teamName: '${sentry.teamName}',
+      DSN: '${sentryConfig.DSN}',
+      id: '${sentryConfig.id}',
+      projectName: '${sentryConfig.projectName}',
+      teamName: '${sentryConfig.teamName}',
     }`
         : 'null'};
 
+    var experimentsConfig = ${({ experimentsConfig }) =>
+      experimentsConfig
+        ? `{
+        scope: '${experimentsConfig.scope}'
+      }`
+        : 'null'};
+
     var WrappedEditorApp = () => React.createElement(EditorAppWrapper, {
-      UserComponent,
+      UserComponent: UserComponent,
       name: componentName,
-      sentry,
+      sentry: sentryConfig,
+      experimentsConfig: experimentsConfig,
       userController: createController,
       mapPlatformStateToAppData: importedApp.mapPlatformStateToAppData,
       customInitAppForPage: importedApp.initAppForPage

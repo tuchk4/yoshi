@@ -5,20 +5,16 @@ import {
   IWixAPI,
   IPlatformServices,
 } from '@wix/native-components-infra/dist/src/types/types';
-import {
-  createInstances,
-  objectPromiseAll,
-  fetchFrameworkData,
-  buildSentryOptions,
-  getArtifact,
-} from './utils';
+import { fetchExperiments, buildSentryOptions, getArtifact } from './utils';
 import {
   SentryConfig,
   WidgetType,
   OOI_WIDGET_COMPONENT_TYPE,
+  ExperimentsConfig,
 } from './constants';
+import { FrameworkData } from './types';
 
-let frameworkData: any;
+const frameworkData: FrameworkData = {};
 // TODO: Add types
 let reportError: (error: Error | ErrorEvent | string) => void;
 
@@ -97,12 +93,12 @@ function ooiControllerWrapper(
       return {
         ...userController,
         pageReady: async (...args: Array<any>) => {
-          const awaitedFrameworkData = await objectPromiseAll(frameworkData);
+          // const awaitedFrameworkData = await objectPromiseAll(frameworkData);
 
           // TODO: export by property (methods, state) so we won't have conflicting props
           setProps({
             __publicData__: controllerConfig.config.publicData,
-            ...awaitedFrameworkData,
+            // ...awaitedFrameworkData,
             // Set initial state
             state: context.state,
             // Set methods
@@ -156,7 +152,6 @@ const getDescriptorForConfig = (
 export const createControllers = (
   createController: Function,
   mapPlatformStateToAppData: Function,
-  experimentsScope?: string,
 ) => {
   return createControllersWithDescriptors(
     [
@@ -167,14 +162,12 @@ export const createControllers = (
       },
     ],
     mapPlatformStateToAppData,
-    experimentsScope,
   );
 };
 
 export const createControllersWithDescriptors = (
   controllerDescriptors: Array<ControllerDescriptor>,
   mapPlatformStateToAppData: Function,
-  experimentsScope?: string,
 ) => (controllerConfigs: Array<IWidgetControllerConfig>) => {
   // It should be called inside initAppForPage
   const { appParams, platformAPIs, wixCodeApi } = controllerConfigs[0];
@@ -202,10 +195,6 @@ export const createControllersWithDescriptors = (
       );
     }
 
-    if (experimentsScope) {
-      initializeExperiments(experimentsScope);
-    }
-
     return wrapControllerByWidgetType(
       controllerDescriptor,
       controllerConfig,
@@ -216,18 +205,10 @@ export const createControllersWithDescriptors = (
   return wrappedControllers;
 };
 
-const initializeExperiments = (scope: string) => {
-  frameworkData = fetchFrameworkData(scope);
-
-  // TODO: Generalize
-  frameworkData.experimentsPromise = frameworkData.experimentsPromise.then(
-    (experiments: any) => createInstances({ experiments }),
-  );
-};
-
 export const initAppForPageWrapper = (
   initAppForPage: Function,
   sentry: SentryConfig | null,
+  experimentsConfig: ExperimentsConfig | null,
 ) => (
   initParams: IAppData,
   apis: IPlatformAPI,
@@ -252,6 +233,10 @@ export const initAppForPageWrapper = (
 
     reportError = sentryInstance.captureException.bind(sentryInstance);
   }
+
+  frameworkData.experiments = experimentsConfig
+    ? fetchExperiments(experimentsConfig)
+    : Promise.resolve({});
 
   if (initAppForPage) {
     return initAppForPage(

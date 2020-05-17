@@ -55,7 +55,7 @@ export default t<Opts>`
   import * as viewerApp from '${({ viewerAppFileName }) => viewerAppFileName}';
   var importedApp = viewerApp;
 
-  var sentry = ${({ sentryConfig }) =>
+  var sentryConfig = ${({ sentryConfig }) =>
     sentryConfig
       ? `{
       DSN: '${sentryConfig.DSN}',
@@ -68,15 +68,15 @@ export default t<Opts>`
   var experimentsConfig = ${({ experimentsConfig }) =>
     experimentsConfig
       ? `{
-    scope: ${experimentsConfig.scope}
+    scope: '${experimentsConfig.scope}'
   }`
-      : 'null'}
+      : 'null'};
 
-  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentry);
+  export const initAppForPage = initAppForPageWrapper(importedApp.initAppForPage, sentryConfig, experimentsConfig);
   export const createControllers = createControllersWithDescriptors([${({
     controllersMeta,
   }) =>
     controllerConfigs({
       controllersMeta,
-    })}], importedApp.mapPlatformStateToAppData, experimentsConfig);
+    })}], importedApp.mapPlatformStateToAppData);
 `;

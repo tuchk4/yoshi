@@ -17,7 +17,7 @@ export const getQueryParams = (
 };
 
 export * from './createInstances';
-export * from './fetchFrameworkData';
+export * from './fetchExperiments';
 
 export const loadScript = (scriptSrc: string) =>
   new Promise(resolve => {

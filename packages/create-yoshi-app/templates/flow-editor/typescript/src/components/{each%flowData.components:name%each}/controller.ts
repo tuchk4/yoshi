@@ -1,16 +1,15 @@
-import Experiments, { ExperimentsBag } from '@wix/wix-experiments';
 import {
   IWidgetControllerConfig,
   IWidgetConfig,
   IAppData,
 } from '@wix/native-components-infra/dist/src/types/types';
+import { FrameworkData } from 'yoshi-flow-editor-runtime/build/types';
 import { appName } from '../../../.application.json';
-import { EXPERIMENTS_SCOPE } from '../../config/constants';
 import { getSiteTranslations } from '../../config/i18n';
 import { id as widgetId } from './.component.json';
 
 export interface ControllerContext {
-  frameworkData?: any;
+  frameworkData: FrameworkData;
   appData?: IAppData;
   widgetConfig?: IWidgetConfig;
   controllerConfig: IWidgetControllerConfig;
@@ -34,23 +33,16 @@ function isSSR({ wixCodeApi }: IWidgetControllerConfig): boolean {
   return wixCodeApi.window.rendering.env === 'backend';
 }
 
-async function getExperimentsByScope(scope: string): Promise<ExperimentsBag> {
-  const experiments = new Experiments({
-    scope,
-  });
-  await experiments.ready();
-  return experiments.all();
-}
-
 async function createController({
   controllerConfig,
   fedopsLogger,
+  frameworkData,
 }: ControllerContext) {
   const { appParams, setProps } = controllerConfig;
   const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const [experiments, translations] = await Promise.all([
-    getExperimentsByScope(EXPERIMENTS_SCOPE),
+    frameworkData.experiments,
     getSiteTranslations(language),
   ]);
   const { baseUrls = {} } = appParams;
