@@ -5,7 +5,6 @@ import chalk from 'chalk';
 import DevEnvironment from 'yoshi-common/build/dev-environment';
 import { TARGET_DIR, BUILD_DIR } from 'yoshi-config/build/paths';
 import { getServerStartFile } from 'yoshi-helpers/build/server-start-file';
-import { v4 as uuid } from 'uuid';
 import { CliCommand } from '../bin/yoshi-bm';
 import {
   createClientWebpackConfig,
@@ -15,6 +14,7 @@ import createFlowBMModel, { watchFlowBMModel } from '../model';
 import renderModule, { moduleEntryPath } from '../renderModule';
 import renderModuleConfig from '../renderModuleConfig';
 import getStartUrl from '../start-url';
+import { clearCache } from '../cache';
 
 const join = (...dirs: Array<string>) => path.join(process.cwd(), ...dirs);
 
@@ -28,6 +28,7 @@ const start: CliCommand = async function(argv, config) {
       '--https': Boolean,
       '--debug': Boolean,
       '--debug-brk': Boolean,
+      '--no-cache': Boolean,
 
       // Aliases
       '--entry-point': '--server',
@@ -40,6 +41,7 @@ const start: CliCommand = async function(argv, config) {
     '--help': help,
     '--server': serverStartFileCLI,
     '--production': shouldRunAsProduction,
+    '--no-cache': shouldInvalidateCache,
   } = args;
 
   if (help) {
@@ -62,6 +64,10 @@ const start: CliCommand = async function(argv, config) {
     );
 
     process.exit(0);
+  }
+
+  if (shouldInvalidateCache) {
+    clearCache();
   }
 
   let serverStartFile;
@@ -102,7 +108,7 @@ const start: CliCommand = async function(argv, config) {
 
   const model = createFlowBMModel();
 
-  const startUrl = getStartUrl(model);
+  const startUrl = await getStartUrl(model);
 
   const devEnvironment = await DevEnvironment.create({
     webpackConfigs: [clientConfig, serverConfig],

@@ -4602,6 +4602,21 @@
     tslib "^1.5.0"
     urijs "^1.18.12"
 
+"@wix/business-manager-api@1.0.1040":
+  version "1.0.1040"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/business-manager-api/-/@wix/business-manager-api-1.0.1040.tgz#1f2764218d61ceac2461bed47421d72a45089b82"
+  integrity sha1-HydkIY1hzqwkYb7UdCHXKkUIm4I=
+  dependencies:
+    "@sentry/browser" "5.7.1"
+    "@wix/wix-experiments" latest
+    history "^3.3.0"
+    react "16.8.3"
+    react-dom "16.8.3"
+    react-module-container "^1.0.1037"
+    recompose "0.30.0"
+    tslib "^1.5.0"
+    urijs "^1.18.12"
+
 "@wix/cookie-utils@~1.1.695":
   version "1.1.1289"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/@wix/cookie-utils/-/@wix/cookie-utils-1.1.1289.tgz#ede34a9e274ad4a488f589f3594f97ff90917177"
@@ -21489,6 +21504,14 @@ prompt@~0.2.14:
     utile "0.2.x"
     winston "0.8.x"
 
+prompts@2.3.2, prompts@^2.0.1, prompts@^2.0.4, prompts@^2.3.0, prompts@^2.3.2:
+  version "2.3.2"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/prompts/-/prompts-2.3.2.tgz#480572d89ecf39566d2bd3fe2c9fccb7c4c0b068"
+  integrity sha1-SAVy2J7POVZtK9P+LJ/Mt8TAsGg=
+  dependencies:
+    kleur "^3.0.3"
+    sisteransi "^1.0.4"
+
 prompts@^0.1.8:
   version "0.1.14"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/prompts/-/prompts-0.1.14.tgz#a8e15c612c5c9ec8f8111847df3337c9cbd443b2"
@@ -21496,14 +21519,6 @@ prompts@^0.1.8:
   dependencies:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
-
-prompts@^2.0.1, prompts@^2.0.4, prompts@^2.3.0, prompts@^2.3.2:
-  version "2.3.2"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/prompts/-/prompts-2.3.2.tgz#480572d89ecf39566d2bd3fe2c9fccb7c4c0b068"
-  integrity sha1-SAVy2J7POVZtK9P+LJ/Mt8TAsGg=
-  dependencies:
-    kleur "^3.0.3"
-    sisteransi "^1.0.4"
 
 promzard@^0.3.0:
   version "0.3.0"
