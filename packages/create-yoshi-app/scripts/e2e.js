@@ -154,6 +154,8 @@ const testTemplate = mockedAnswers => {
       const buildResult = await exec('npm run build');
 
       if (buildResult.exitCode !== 0) {
+        console.log(buildResult.stderr);
+        console.log(buildResult.stdout);
         throw new Error(
           `"npm run build" exited with code ${buildResult.exitCode}.\nPlease see above for its output.`,
         );
