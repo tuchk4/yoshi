@@ -6,11 +6,7 @@ import {
   InjectedTranslateProps,
 } from 'react-i18next';
 import { iframeAppBiLoggerFactory } from '@wix/iframe-app-bi-logger';
-import {
-  ExperimentsProvider,
-  withExperiments,
-  InjectedExperimentsProps,
-} from '@wix/wix-experiments-react';
+import { ExperimentsProvider } from '@wix/wix-experiments-react';
 import { get } from 'lodash';
 import { WixSDK, BILogger, BILoggerProvider } from 'yoshi-flow-editor-runtime';
 import { ColorPickerColorSpace, TextLabel } from '@wix/wix-base-ui';
