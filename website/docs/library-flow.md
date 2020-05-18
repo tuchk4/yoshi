@@ -31,7 +31,9 @@ A library is a chunk of code that you want to reuse between client applications,
 EXPERIMENTAL_FLOW_LIBRARY=true npx create-yoshi-app <my-library>
 ```
 
-Choose `flow-library` & `TypeScript`
+Choose `flow-library` & `TypeScript`.
+
+In case you want to ship a `.css` bundle with your library, also run `npm install -D yoshi-style-dependencies`.
 
 ## Usage
 
