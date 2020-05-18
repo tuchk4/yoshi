@@ -13,6 +13,7 @@ import {
   ExperimentsConfig,
 } from './constants';
 import { FlowData } from './types';
+import { getEmptyExperiments } from './fetchExperiments';
 
 const flowData: FlowData = {};
 // TODO: Add types
@@ -234,9 +235,10 @@ export const initAppForPageWrapper = (
     reportError = sentryInstance.captureException.bind(sentryInstance);
   }
 
+  // If user didn't configure experiments, we'll just mock it to empty object.
   flowData.experiments = experimentsConfig
     ? fetchExperiments(experimentsConfig)
-    : Promise.resolve({});
+    : getEmptyExperiments();
 
   if (initAppForPage) {
     return initAppForPage(

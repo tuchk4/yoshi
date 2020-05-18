@@ -125,7 +125,7 @@ export default async function createController({ flowData }) => {
         getSomeData(),
       ]);
       setProps({
-        withNewButton: experiments['specs.my-scope.EnableNewButton'],
+        withNewButton: experiments.enabled('specs.my-scope.EnableNewButton'),
         someData,
       });
     }

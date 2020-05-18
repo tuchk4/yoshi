@@ -1,3 +1,4 @@
+import Experiments from '@wix/wix-experiments';
 import { IWidgetControllerConfig } from '@wix/native-components-infra/dist/src/types/types';
 import translations from '../../assets/locales/messages_en.json';
 import {
@@ -11,8 +12,10 @@ import createAppController from './controller';
 
 describe('createController', () => {
   it('should call setProps with data', async () => {
-    const experiments = { 'specs.test.ShouldShowButton': 'true' };
-    mockExperiments(experimentsConfig.scope, experiments);
+    const experiments = new Experiments({
+      experiments: { 'specs.test.ShouldShowButton': 'true' },
+    });
+    mockExperiments(experimentsConfig.scope, experiments.all());
     const setPropsSpy = jest.fn();
     const language = 'en';
     const controllerConfig: IWidgetControllerConfig = getControllerConfigMock({
@@ -41,7 +44,7 @@ describe('createController', () => {
       appName,
       cssBaseUrl: controllerConfig.appParams.baseUrls.staticsBaseUrl,
       language,
-      experiments,
+      experiments: experiments.all(),
       mobile: false,
       translations,
     });

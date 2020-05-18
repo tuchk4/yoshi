@@ -1,5 +1,5 @@
-import { ExperimentsBag } from '@wix/wix-experiments';
+import Experiments from '@wix/wix-experiments';
 
 export interface FlowData {
-  experiments?: Promise<ExperimentsBag>;
+  experiments?: Promise<Experiments>;
 }

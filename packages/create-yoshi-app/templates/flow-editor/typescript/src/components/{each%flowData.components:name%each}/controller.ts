@@ -57,7 +57,7 @@ async function createController({
         cssBaseUrl: baseUrls.staticsBaseUrl,
         language,
         mobile,
-        experiments,
+        experiments: experiments.all(),
         translations,
       });
 
