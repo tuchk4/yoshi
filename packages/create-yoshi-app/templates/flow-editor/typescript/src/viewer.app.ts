@@ -3,9 +3,9 @@
 export const mapPlatformStateToAppData = ({
   platformParams,
   controllerConfigs,
-  frameworkData,
+  flowData,
 }: any): { foo: string } => {
-  console.log({ platformParams, controllerConfigs, frameworkData });
+  console.log({ platformParams, controllerConfigs, flowData });
 
   return { foo: 'bar' };
 };

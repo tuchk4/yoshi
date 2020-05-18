@@ -12,9 +12,9 @@ import {
   OOI_WIDGET_COMPONENT_TYPE,
   ExperimentsConfig,
 } from './constants';
-import { FrameworkData } from './types';
+import { FlowData } from './types';
 
-const frameworkData: FrameworkData = {};
+const flowData: FlowData = {};
 // TODO: Add types
 let reportError: (error: Error | ErrorEvent | string) => void;
 
@@ -37,7 +37,7 @@ const defaultControllerWrapper = (
 ) =>
   controllerDescriptor.method({
     controllerConfig,
-    frameworkData,
+    flowData,
     appData,
     reportError,
   });
@@ -82,7 +82,7 @@ function ooiControllerWrapper(
 
   const userControllerPromise = controllerDescriptor.method.call(context, {
     controllerConfig,
-    frameworkData,
+    flowData,
     appData,
     reportError,
     fedopsLogger,
@@ -175,7 +175,7 @@ export const createControllersWithDescriptors = (
     typeof mapPlatformStateToAppData === 'function'
       ? mapPlatformStateToAppData({
           controllerConfigs,
-          frameworkData,
+          flowData,
           appParams,
           platformAPIs,
           wixCodeApi,
@@ -234,7 +234,7 @@ export const initAppForPageWrapper = (
     reportError = sentryInstance.captureException.bind(sentryInstance);
   }
 
-  frameworkData.experiments = experimentsConfig
+  flowData.experiments = experimentsConfig
     ? fetchExperiments(experimentsConfig)
     : Promise.resolve({});
 

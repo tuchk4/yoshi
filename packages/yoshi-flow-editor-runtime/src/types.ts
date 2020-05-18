@@ -1,5 +1,5 @@
 import { ExperimentsBag } from '@wix/wix-experiments';
 
-export interface FrameworkData {
+export interface FlowData {
   experiments?: Promise<ExperimentsBag>;
 }

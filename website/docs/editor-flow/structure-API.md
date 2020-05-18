@@ -110,20 +110,23 @@ Arguments:
 ##### `appData`: *(flow)*
 Object which aims to use data for all controllers. This is a data that comes from `mapPlatformStateToAppData` method, which is being called before `createControllers`.
 
-#### `frameworkData`: *(flow)*
+#### `flowData`: *(flow)*
 Data with experiments, locations and other info being fetched.
-##### `experimentsPromise`: `Promise<Experiments>`
+##### `experiments`: `Promise<Experiments>`
 Promise that's return `Experiments` instance for current scope.
 
 *controller.ts*
 ```ts
-export default async function createController({ frameworkData }) => {
+export default async function createController({ flowData }) => {
   return {
     pageReady() {
-      frameworkData.experimentsPromise.then(experiments => {
-        setProps({
-          withNewButton: experiments.get('specs.my-scope.EnableNewButton'),
-        });
+      const [experiments, someData] = await Promise.all([
+        flowData.experiments,
+        getSomeData(),
+      ]);
+      setProps({
+        withNewButton: experiments['specs.my-scope.EnableNewButton'],
+        someData,
       });
     }
   };

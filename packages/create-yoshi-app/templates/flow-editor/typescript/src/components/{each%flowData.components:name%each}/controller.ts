@@ -3,13 +3,13 @@ import {
   IWidgetConfig,
   IAppData,
 } from '@wix/native-components-infra/dist/src/types/types';
-import { FrameworkData } from 'yoshi-flow-editor-runtime/build/types';
+import { FlowData } from 'yoshi-flow-editor-runtime/build/types';
 import { appName } from '../../../.application.json';
 import { getSiteTranslations } from '../../config/i18n';
 import { id as widgetId } from './.component.json';
 
 export interface ControllerContext {
-  frameworkData: FrameworkData;
+  flowData: FlowData;
   appData?: IAppData;
   widgetConfig?: IWidgetConfig;
   controllerConfig: IWidgetControllerConfig;
@@ -36,13 +36,13 @@ function isSSR({ wixCodeApi }: IWidgetControllerConfig): boolean {
 async function createController({
   controllerConfig,
   fedopsLogger,
-  frameworkData,
+  flowData,
 }: ControllerContext) {
   const { appParams, setProps } = controllerConfig;
   const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const [experiments, translations] = await Promise.all([
-    frameworkData.experiments,
+    flowData.experiments,
     getSiteTranslations(language),
   ]);
   const { baseUrls = {} } = appParams;

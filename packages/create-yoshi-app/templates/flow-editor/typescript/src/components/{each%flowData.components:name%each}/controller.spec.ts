@@ -28,7 +28,7 @@ describe('createController', () => {
     });
 
     const controller = await createAppController({
-      frameworkData: {
+      flowData: {
         experiments: Promise.resolve(experiments),
       },
       controllerConfig,

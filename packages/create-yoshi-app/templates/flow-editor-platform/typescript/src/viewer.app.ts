@@ -3,9 +3,9 @@
 export const mapPlatformStateToAppData = async ({
   platformParams,
   controllerConfigs,
-  frameworkData,
+  flowData,
 }: any) => {
-  return { platformParams, controllerConfigs, frameworkData };
+  return { platformParams, controllerConfigs, flowData };
 };
 
 export const initAppForPage = () => {
