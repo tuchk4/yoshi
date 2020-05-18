@@ -60,6 +60,8 @@ export const Widget = translate()(
               {t('app.widget.welcome')} {appName}!
             </h2>
           </div>
+          {/* {This is a dummy experiment. To generate a new experiment,
+            check this guide: https://github.com/wix-private/fed-handbook/blob/master/EXPERIMENTS.md#create-experiment} */}
           {experiments.enabled('specs.test.ShouldShowButton') ? (
             <Button className={styles.mainButton}>Click me</Button>
           ) : null}
