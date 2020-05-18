@@ -112,16 +112,33 @@ Object which aims to use data for all controllers. This is a data that comes fro
 
 #### `flowData`: *(flow)*
 Data with experiments, locations and other info being fetched.
-##### `experiments`: `Promise<Experiments>`
-Promise that's return `Experiments` instance for current scope.
+##### `getExperiments`: `() => Promise<Experiments>`
+Return a Promise, which will be resolved with `Experiments` instance for current scope.
+Takes a configuration from `experiments` field in `.application.json`.
 
+*Simple example*
+*controller.ts*
+```ts
+export default async function createController({ flowData }) => {
+  return {
+    pageReady() {
+      const experiments = await flowData.getExperiments();
+      setProps({
+        withNewButton: experiments.enabled('specs.my-scope.EnableNewButton'),
+      });
+    }
+  };
+}
+```
+
+*Parallel loading example*
 *controller.ts*
 ```ts
 export default async function createController({ flowData }) => {
   return {
     pageReady() {
       const [experiments, someData] = await Promise.all([
-        flowData.experiments,
+        flowData.getExperiments(),
         getSomeData(),
       ]);
       setProps({

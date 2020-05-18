@@ -5,19 +5,21 @@ import {
   IWixAPI,
   IPlatformServices,
 } from '@wix/native-components-infra/dist/src/types/types';
-import { fetchExperiments, buildSentryOptions, getArtifact } from './utils';
+import { buildSentryOptions, getArtifact } from './utils';
 import {
   SentryConfig,
   WidgetType,
   OOI_WIDGET_COMPONENT_TYPE,
   ExperimentsConfig,
 } from './constants';
-import { FlowData } from './types';
-import { getEmptyExperiments } from './fetchExperiments';
+import { FlowData, ReportError } from './types';
+import { fetchExperiments, getEmptyExperiments } from './fetchExperiments';
 
-const flowData: FlowData = {};
-// TODO: Add types
-let reportError: (error: Error | ErrorEvent | string) => void;
+const flowData: FlowData = {
+  // Initialize with an empty `Experiments`.
+  getExperiments: () => getEmptyExperiments(),
+};
+let reportError: ReportError;
 
 type ControllerDescriptor = {
   id: string | null;
@@ -94,12 +96,9 @@ function ooiControllerWrapper(
       return {
         ...userController,
         pageReady: async (...args: Array<any>) => {
-          // const awaitedFrameworkData = await objectPromiseAll(frameworkData);
-
           // TODO: export by property (methods, state) so we won't have conflicting props
           setProps({
             __publicData__: controllerConfig.config.publicData,
-            // ...awaitedFrameworkData,
             // Set initial state
             state: context.state,
             // Set methods
@@ -108,7 +107,7 @@ function ooiControllerWrapper(
 
           // Optional `pageReady`
           if (userController.pageReady) {
-            return userController.pageReady(setProps, ...args);
+            return userController.pageReady(...args);
           }
         },
         exports: userController.corvid,
@@ -236,9 +235,9 @@ export const initAppForPageWrapper = (
   }
 
   // If user didn't configure experiments, we'll just mock it to empty object.
-  flowData.experiments = experimentsConfig
-    ? fetchExperiments(experimentsConfig)
-    : getEmptyExperiments();
+  if (experimentsConfig) {
+    flowData.getExperiments = () => fetchExperiments(experimentsConfig);
+  }
 
   if (initAppForPage) {
     return initAppForPage(

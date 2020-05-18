@@ -1,20 +1,8 @@
-import {
-  IWidgetControllerConfig,
-  IWidgetConfig,
-  IAppData,
-} from '@wix/native-components-infra/dist/src/types/types';
-import { FlowData } from 'yoshi-flow-editor-runtime/build/types';
+import { IWidgetControllerConfig } from '@wix/native-components-infra/dist/src/types/types';
+import { ControllerContext } from 'yoshi-flow-editor-runtime/build/types';
 import { appName } from '../../../.application.json';
 import { getSiteTranslations } from '../../config/i18n';
 import { id as widgetId } from './.component.json';
-
-export interface ControllerContext {
-  flowData: FlowData;
-  appData?: IAppData;
-  widgetConfig?: IWidgetConfig;
-  controllerConfig: IWidgetControllerConfig;
-  fedopsLogger?: any;
-}
 
 function getSiteLanguage({ wixCodeApi }: IWidgetControllerConfig) {
   if (wixCodeApi.window.multilingual.isEnabled) {
@@ -42,7 +30,7 @@ async function createController({
   const language = getSiteLanguage(controllerConfig);
   const mobile = isMobile(controllerConfig);
   const [experiments, translations] = await Promise.all([
-    flowData.experiments,
+    flowData.getExperiments(),
     getSiteTranslations(language),
   ]);
   const { baseUrls = {} } = appParams;

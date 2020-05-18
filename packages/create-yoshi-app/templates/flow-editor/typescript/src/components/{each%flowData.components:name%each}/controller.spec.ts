@@ -32,7 +32,9 @@ describe('createController', () => {
 
     const controller = await createAppController({
       flowData: {
-        experiments: Promise.resolve(experiments),
+        getExperiments() {
+          return Promise.resolve(experiments);
+        },
       },
       controllerConfig,
       fedopsLogger: getFedopsLoggerMock(),
