@@ -5,18 +5,20 @@ import { replaceTemplates, getTemplateScopes } from './template-utils';
 import getValuesMap from './getValuesMap';
 import TemplateModel from './TemplateModel';
 
-const processFileWithScope = (
+export const processFileWithScope = (
   fileName: string,
   fileContent: string,
   scope: Record<string, any>,
-) => {
-  const transformed = replaceTemplates(fileContent, scope);
-  const transformedPath = replaceTemplates(fileName, scope);
+  { graceful }: { graceful?: boolean } = { graceful: false },
+): { content: string; path: string } => {
+  const transformedContent = replaceTemplates(fileContent, scope, { graceful });
+  const transformedPath = replaceTemplates(fileName, scope, { graceful });
 
-  outputFileSync(transformedPath, transformed);
+  outputFileSync(transformedPath, transformedContent);
+  return { content: transformedContent, path: transformedPath };
 };
 
-const processFilesWithScopes = (
+export const processFilesWithScopes = (
   files: Record<string, string>,
   scope: Record<string, any>,
   workingDir: string,

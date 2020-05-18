@@ -16,4 +16,8 @@ function getStylableWebpackPlugin() {
   return require('@stylable/webpack-plugin');
 }
 
+export const globalRuntimeId = isStylableDependencies()
+  ? '__stylable3_runtime__'
+  : '__stylable_runtime__';
+
 export default getStylableWebpackPlugin();

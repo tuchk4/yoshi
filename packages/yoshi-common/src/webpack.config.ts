@@ -44,7 +44,9 @@ import WebpackBar from 'webpackbar';
 import isCi from 'is-ci';
 import { stripOrganization } from 'yoshi-helpers/build/utils';
 import { resolveNamespaceFactory } from './@stylable/node';
-import StylableWebpackPlugin from './@stylable/webpack-plugin';
+import StylableWebpackPlugin, {
+  globalRuntimeId,
+} from './@stylable/webpack-plugin';
 import shouldTranspileFile from './utils/should-transpile-file';
 import InlineChunkHtmlPlugin from './html-inline-plugin';
 import { localIdentName } from './utils/constants';
@@ -698,7 +700,7 @@ export function createBaseWebpackConfig({
               outputCSS: separateStylableCss,
               includeCSSInJS: !separateStylableCss,
               runtimeMode: 'shared',
-              globalRuntimeId: '__stylable_yoshi__',
+              globalRuntimeId,
             }),
 
             new ManifestPlugin({ fileName: 'manifest', isDev }),

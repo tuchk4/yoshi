@@ -17,7 +17,11 @@ const sortBy = require('lodash/sortBy');
 const prompts = require('prompts');
 const chokidar = require('chokidar');
 const clipboardy = require('clipboardy');
-const { replaceTemplates, getValuesMap } = require('../src/index');
+const {
+  getValuesMap,
+  getTemplateScopes,
+  processFileWithScope,
+} = require('../src/index');
 const { appCacheKey } = require('../src/constants');
 const cache = require('./cache')(appCacheKey);
 const TemplateModel = require('../src/TemplateModel').default;
@@ -49,24 +53,28 @@ function startWatcher(workingDir, templateModel) {
     const fullPath = path.join(templatePath, relativePath);
     const fileContents = fs.readFileSync(fullPath, 'utf-8');
     const destinationPath = path.join(workingDir, relativePath);
+    const scopes = getTemplateScopes(fullPath, valuesMap);
 
-    const transformedContents = replaceTemplates(fileContents, valuesMap, {
-      graceful: true,
+    scopes.forEach(loopScope => {
+      const transformed = processFileWithScope(
+        destinationPath,
+        fileContents,
+        {
+          ...valuesMap,
+          ...loopScope,
+        },
+        {
+          graceful: true,
+        },
+      );
+
+      console.log(
+        `${path.join(
+          path.basename(templatePath),
+          relativePath,
+        )} ${chalk.magenta('->')} ${chalk.cyan(transformed.path)}`,
+      );
     });
-
-    const transformedDestinationPath = replaceTemplates(
-      destinationPath,
-      valuesMap,
-      { graceful: true },
-    );
-
-    fs.outputFileSync(transformedDestinationPath, transformedContents);
-
-    console.log(
-      `${path.join(path.basename(templatePath), relativePath)} ${chalk.magenta(
-        '->',
-      )} ${chalk.cyan(transformedDestinationPath)}`,
-    );
   };
 
   watcher.on('change', relativePath => {
@@ -198,7 +206,11 @@ async function init() {
 
   clipboardy.writeSync(workingDir);
 
-  console.log('> ', chalk.cyan('directory path has copied to clipboard 📋'));
+  console.log('> ', 'Generated a project: ', chalk.yellowBright(workingDir));
+  console.log(
+    '> ',
+    chalk.cyan('Project directory path has copied to clipboard 📋'),
+  );
   console.log();
 
   startWatcher(workingDir, templateModel);

@@ -1,5 +1,43 @@
 # Changelog
 
+## 4.77.4 (2020-05-18)
+
+#### :bug: Bug Fix
+
+- `yoshi-common`
+  - [#2428](https://github.com/wix/yoshi/pull/2428) Don't load server HMR entry if Suricate is used ([@ronami](https://github.com/ronami))
+  - [#2419](https://github.com/wix/yoshi/pull/2419) Use a different runtime id in case we use stylable 3 ([@ranyitz](https://github.com/ranyitz))
+
+## 4.77.3 (2020-05-18)
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#2425](https://github.com/wix/yoshi/pull/2425) Create a temporary `package.json` for `add-sentry` configuration ([@yavorsky](https://github.com/yavorsky))
+
+## 4.77.2 (2020-05-18)
+
+#### :building_construction: Templates
+
+- `create-yoshi-app`
+  - [#2363](https://github.com/wix/yoshi/pull/2363) Migrate BM templates to use `wix-i18n-config` ([@amitdahan](https://github.com/amitdahan))
+
+#### :bug: Bug Fix
+
+- `create-yoshi-app`
+  - [#2426](https://github.com/wix/yoshi/pull/2426) Fix dev.js script to support template loops ([@yavorsky](https://github.com/yavorsky))
+
+#### :house: Internal
+
+- `create-yoshi-app`
+  - [#2426](https://github.com/wix/yoshi/pull/2426) Fix dev.js script to support template loops ([@yavorsky](https://github.com/yavorsky))
+
+#### Committers: 3
+
+- Amit Dahan ([@amitdahan](https://github.com/amitdahan))
+- Artem Yavorsky ([@yavorsky](https://github.com/yavorsky))
+- barak igal ([@barak007](https://github.com/barak007))
+
 ## 4.77.1 (2020-05-17)
 
 #### :bug: Bug Fix

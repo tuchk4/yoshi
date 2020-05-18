@@ -433,11 +433,13 @@ export default class DevEnvironment {
         }
 
         // Add server hot entry
-        serverConfig.entry = addEntry(serverConfig.entry, [
-          `${require.resolve('./utils/server-hot-client')}?${
-            serverProcess.socketServer.hmrPort
-          }`,
-        ]);
+        if (!suricate) {
+          serverConfig.entry = addEntry(serverConfig.entry, [
+            `${require.resolve('./utils/server-hot-client')}?${
+              serverProcess.socketServer.hmrPort
+            }`,
+          ]);
+        }
       }
     }
 
