@@ -19,6 +19,9 @@ const toControllerMeta = (
   };
 };
 
+const editorScriptWrapperPath =
+  'yoshi-flow-editor-runtime/build/editorScript.js';
+
 const editorScriptWrapper = (
   generatedWidgetEntriesPath: string,
   model: FlowEditorModel,
@@ -41,7 +44,10 @@ const editorScriptWrapper = (
   );
 
   const generateEditorScriptEntryContent = editorScriptEntry({
+    editorScriptWrapperPath,
     editorEntryFileName: model.editorEntryFileName,
+    artifactId: model.artifactId,
+    sentry: model.sentry,
     controllersMeta,
     shouldUseAppBuilder,
   });

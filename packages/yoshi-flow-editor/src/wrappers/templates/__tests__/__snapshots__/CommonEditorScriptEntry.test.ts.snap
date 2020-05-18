@@ -6,6 +6,39 @@ exports[`CommonEditorScriptEntry template generates correct template with entry 
 
   
 
+  
+  var editorReadyWrapper = require('yoshi-flow-editor-runtime/build/editorScript.js').editorReadyWrapper;
+  var sentry = null;
+
+  if (editorScriptEntry.editorReady) {
+    editorScriptEntry.editorReady = editorReadyWrapper(editorScriptEntry.editorReady, sentry, 'some-app');
+  }
+  
+
+  module.exports = editorScriptEntry.default || editorScriptEntry;
+"
+`;
+
+exports[`CommonEditorScriptEntry template generates correct template with entry editorScript file for OOI components using sentry 1`] = `
+"
+  var editorScriptEntry = require('project/src/editor.app.ts');
+
+  
+
+  
+  var editorReadyWrapper = require('yoshi-flow-editor-runtime/build/editorScript.js').editorReadyWrapper;
+  var sentry = {
+    DSN: 'kkk',
+    id: '1',
+    projectName: 'some-project',
+    teamName: 'some-team',
+  };
+
+  if (editorScriptEntry.editorReady) {
+    editorScriptEntry.editorReady = editorReadyWrapper(editorScriptEntry.editorReady, sentry, 'some-app');
+  }
+  
+
   module.exports = editorScriptEntry.default || editorScriptEntry;
 "
 `;
@@ -31,6 +64,8 @@ exports[`CommonEditorScriptEntry template generates correct template with entry 
   var userController_0 = require('project/src/components/a/editor.controller.ts');
   builder = builder.withWidget(userController_0.default || userController_0);
   editorScriptEntry = builder.build();
+  
+
   
 
   module.exports = editorScriptEntry.default || editorScriptEntry;
@@ -64,6 +99,8 @@ exports[`CommonEditorScriptEntry template generates correct template with entry 
   var userController_2 = require('project/src/components/d/editor.controller.ts');
   builder = builder.withWidget(userController_2.default || userController_2);
   editorScriptEntry = builder.build();
+  
+
   
 
   module.exports = editorScriptEntry.default || editorScriptEntry;
