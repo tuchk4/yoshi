@@ -22,7 +22,7 @@ verifyRegistry();
 const templatesWithTitles = flatMap(templates, templateDefinition => {
   return templateDefinition.language.map(language => {
     return { ...templateDefinition, title: `${templateDefinition.name}-${language}` };
-  }),
+  });
 });
 
 const filteredTemplates = templatesWithTitles.filter(({ title }) =>
