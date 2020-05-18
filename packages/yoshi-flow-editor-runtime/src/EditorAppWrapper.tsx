@@ -53,11 +53,6 @@ const createEditorAppForWixSDK = ({
     isEditor: true,
   });
 
-  console.log(
-    experimentsConfig,
-    'experimentsConfigexperimentsConfigexperimentsConfig',
-  );
-
   return ViewerScriptWrapper(WithComponent, {
     viewerScript: {
       createControllers: createControllers(
