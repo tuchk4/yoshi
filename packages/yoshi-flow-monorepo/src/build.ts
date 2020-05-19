@@ -24,7 +24,7 @@ export default async function build(pkgs: Array<PackageGraphNode>) {
   pkgs.forEach(pkg => {
     const assets = globby.sync('src/**/*', {
       cwd: pkg.location,
-      ignore: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.json'],
+      ignore: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.json', '**/*.snap'],
     });
 
     assets.forEach(assetPath => {
