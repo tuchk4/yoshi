@@ -67,7 +67,7 @@ const start: cliCommand = async function (argv, rootConfig, { apps, libs }) {
     return process.exit(1);
   }
 
-  const pkg = apps.find((pkg) => pkg.name === appName);
+  const pkg = apps.find((pkg) => stripOrganization(pkg.name) === appName);
 
   if (!pkg) {
     console.log(
@@ -77,6 +77,7 @@ const start: cliCommand = async function (argv, rootConfig, { apps, libs }) {
     console.log(
       `  ${apps
         .map(({ name }) => name)
+        .map(stripOrganization)
         .map((name) => chalk.cyanBright(name))
         .join(', ')}`,
     );
