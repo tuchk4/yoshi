@@ -77,7 +77,6 @@ const start: cliCommand = async function (argv, rootConfig, { apps, libs }) {
     console.log(
       `  ${apps
         .map(({ name }) => name)
-        .map(stripOrganization)
         .map((name) => chalk.cyanBright(name))
         .join(', ')}`,
     );
